@@ -22,8 +22,7 @@
 #' @import proxysnps
 #' @import parallel
 #' @examples
-#' #' \dontrun{
-#' }
+#' \dontrun{}
 #' @author Inga Patarcic
 #' @export
 expandByLD <- function(myDNA,

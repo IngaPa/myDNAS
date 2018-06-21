@@ -4,24 +4,19 @@ Title: myDNA: R package to analyze personal genotypes
 Version: 0.1.0
 Author: Inga Patarcic
 Maintainer: The package maintainer <inga.patarcic@gmail.com>
-Description:This package is used to analyze personal genotype which is obtained
-by using one of the direct-to-consumer (DTC) DNA tests from DNA testing
-companies such as myHeritage, 23andMe, ancestryDNA, etc.
-Currently, user can import genotypes, overlap personal genotypes with 
-SNP-triat database results (such as GWASCatalog) or a list od SNP unique
-identifiers and corresponding risk alleles, identify risk alleles,
-expand SNP list by identifying SNPs that are in LD with reported SNPs. 
+Description:This package is used to analyze personal genotype which is obtained by using one of the direct-to-consumer (DTC) DNA tests from DNA testing companies such as myHeritageDNA, 23andMe, ancestryDNA, etc.Currently, user can import genotypes, overlap personal genotypes with SNP-triat database results (such as GWASCatalog) or a list od SNP unique identifiers and corresponding risk alleles, identify risk alleles, expand SNP list by identifying SNPs that are in LD with reported SNPs. 
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.4.0),
+Depends: R (>= 3.4.0)
 Imports: IRanges, 
-         GenomicRanges
+         GenomicRanges,
          parallel,
-         S4Vectors (>= 0.14.0),
+         S4Vectors,
          stringr,
          proxysnps, 
-         dplyr
+         dplyr,
+         gwascat
 RoxygenNote: 6.0.1
 Suggests: knitr,
           rmarkdown,

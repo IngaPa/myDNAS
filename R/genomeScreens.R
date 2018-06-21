@@ -102,11 +102,13 @@ myDNAScreenDB <- function(myDNA,
 #' -in that order. This function is useful when user already has a list of SNPs
 #' associated with a trait of interest.
 #'
-#' @examples # example - creating example for myDNAScreenSNPS()
+#' @examples
+#' \dontrun{
+#' # example - creating example for myDNAScreenSNPS()
 #' # IDEA is as follows: extract rs and snp risk alleles, and extract those for
 #'  coronary heart disease
 #'  # filter CHD SNPS
-#' \dontrun{dd.heart <- filter(db,
+#' dd.heart <- filter(db,
 #'                    MAPPED_TRAIT=="coronary heart disease")
 #'
 #' snpsData <-   dd.heart$STRONGEST.SNP.RISK.ALLELE
@@ -183,11 +185,11 @@ identifyRiskAllele <- function(myDNAAdded,
 
 #' Filter prescreened myDNA object filter for trait of interest
 #'
-#' @param myDNA GRanges object, output of importDNA function
+#' @param myScreenDNA GRanges object, output of importDNA function
 #'
 #' @param trait (character) which trait are you interested in
 #'
-#' @risk (character; default "high")
+#' @param risk (character; default "high")
 #' "high" -> OR>=1.5,
 #'  "elavated" -> OR >1&<1.5
 #'  "protective" -> OR >0.75&<1
@@ -201,7 +203,7 @@ identifyRiskAllele <- function(myDNAAdded,
 #' @import stringr
 #' @import dplyr
 #' @examples
-#' #' \dontrun{
+#' \dontrun{
 #'myAchille <- traitScreen(myScreenDNA, risk="high")
 #'myDepression <- traitScreen(myScreenDNA, risk="all",
 #'trait="unipolar depression")

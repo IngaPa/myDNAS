@@ -1,65 +1,161 @@
 ---
-title: "myDAVignette Title"
-author: "Vignette Author"
+title: "myDNA"
+author: "Inga Patarcic"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:  
+  html_document:
+        toc: true
+        toc_float: true
+        number_sections: true
+        toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{myDNA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r global_options, include=FALSE}
+
+library(knitr)
+library(myDNA)
+library(gwascat)
+library(dplyr)
+library(rmarkdown)
+library(stringr)
+
+opts_chunk$set(warning = FALSE,
+               message= FALSE,
+               fig.align='center',
+               fig.path='Figures', 
+               dev='png',
+               fig.show='hold', 
+               cache=FALSE)
+
+
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+# Introduction
 
-## Vignette Info
+This package is used to analyze personal genotype which is obtained by using one of the direct-to-consumer (DTC) DNA tests from DNA testing companies such as myHeritageDNA, 23andMe, AncestryDNA, etc.
+Currently, user can:
+1) import genotypes, 
+2a) overlap personal genotypes with SNP-triat database results 
+(such as GWASCatalog) or,
+2b) a list od SNP unique identifiers and corresponding risk alleles,
+3) identify personal risk alleles, 
+4) expand SNP list by identifying SNPs that are in LD with reported SNPs. 
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
 
-## Styles
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+-----------------------------------------------------------------------------
 
-## Figures
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+# Import genotypes using importDNA()
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+One can import personal genotypes obtained by using one of the
+direct-to-consumer (DTC) DNA tests from DNA testing companies: myHeritageDNA, 23andMe, AncestryDNA
+
+```{r, eval = FALSE}
+
+# example myHeritage
+Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
+myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
+
+
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
 
-## More Examples
+# Overlap genotypes with SNP-trait database with myDNAScreenDB()
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+Once can overlap between my genotypes (myDNA object) and database which stores 
+info about SNP-trait associations. Currently available only GWASCatalog
+(hg19,hg38 as ebicat37,ebicat38, and makeCurrentGWASC). However,
+in the future it will use info from SNPedia
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r, eval = FALSE}
+
+myScreenDNA <- myDNAScreenDB(myDNA = myDNA,
+                             database="ebicat37" )
+
+
 ```
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+
+
+
+#Overlaps myDNA genotypes with SNPs of interest myDNAScreenSNPS()
+
+Overlap my genotypes (myDNA object) and data.frame which stores info about SNPs (their unique ID -rsID, and risk allele -in that order. This function is useful when user already has a list of SNPs associated with a trait of interest.
+
+```{r, eval = FALSE}
+
+
+# IDEA is as follows: create SNPs objectby extracting rs and snp risk alleles, and extract those for coronary heart disease
+
+
+      # filter CHD SNPS
+      dd.heart <- filter(ebicat37,
+                         MAPPED_TRAIT=="coronary heart disease")
+      
+      snpsData <-   dd.heart$STRONGEST.SNP.RISK.ALLELE
+      # greping risk allele
+      riskAlleles <- gsub("[^\\-]*-([ATCG?])", "\\1",
+                          snpsData)
+      
+      snpsData <- cbind(dd.heart$SNPS,riskAlleles)
+
+
+# run myDNAScreenSNPS
+myDNAScreenSNPS(myDNA = myDNA,
+                snpsData = snpsData )
+
+
+```
+
+
+
+
+
+
+# Filter prescreened myDNA object for trait traitScreen()
+
+This function allows you to filter your imported myDNA object +
+overlapped with database of interest (GWASCatalog) by selecting trait in which you are interested in, and selecting category of SNPs. For example,high risk SNPs are those which have reported OR or beta >1.5.
+
+```{r, eval = FALSE}
+
+# screen db for all traits
+myAchille <- traitScreen(myScreenDNA, risk="high")
+
+# screen db for one trait for protective SNPA
+myDepression <- traitScreen(myScreenDNA,
+                            risk="protective",
+                            trait="unipolar depression")
+
+
+```
+
+
+
+#Identify proxy SNPs for all SNPs using expandByLD()
+
+
+For analyzed genotypes (myDNA) this function identifies all SNPs
+ in LD above predefined threshold. 
+ 
+ 
+```{r, eval = FALSE}
+ 
+ expandByLD(myDNA = myGenome[1:10],
+          pop="EUR",
+           R.squared=0.8,
+           chunks=1000,
+           out.dir="/data/akalin/Projects/AAkalin_myDNA/Results/")
+ 
+```

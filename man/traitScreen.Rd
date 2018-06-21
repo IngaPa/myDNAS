@@ -7,9 +7,15 @@
 traitScreen(myScreenDNA, trait = "all", risk = "high.protective")
 }
 \arguments{
+\item{myScreenDNA}{GRanges object, output of importDNA function}
+
 \item{trait}{(character) which trait are you interested in}
 
-\item{myDNA}{GRanges object, output of importDNA function}
+\item{risk}{(character; default "high")
+"high" -> OR>=1.5,
+ "elavated" -> OR >1&<1.5
+ "protective" -> OR >0.75&<1
+ "high.protective" -> OR <0.75,}
 }
 \description{
 Filter prescreened myDNA object filter for trait of interest
@@ -21,7 +27,7 @@ which you are interested in, and selecting category of SNPs. For example,
 high risk SNPs are those which have reported OR or beta >1.5.
 }
 \examples{
-#' \dontrun{
+\dontrun{
 myAchille <- traitScreen(myScreenDNA, risk="high")
 myDepression <- traitScreen(myScreenDNA, risk="all",
 trait="unipolar depression")

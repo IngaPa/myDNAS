@@ -22,11 +22,12 @@ and data.frame which stores info SNPs (their unique ID -rsID, and risk allele
 associated with a trait of interest.
 }
 \examples{
+\dontrun{
 # example - creating example for myDNAScreenSNPS()
 # IDEA is as follows: extract rs and snp risk alleles, and extract those for
  coronary heart disease
  # filter CHD SNPS
-\dontrun{dd.heart <- filter(db,
+dd.heart <- filter(db,
                    MAPPED_TRAIT=="coronary heart disease")
 
 snpsData <-   dd.heart$STRONGEST.SNP.RISK.ALLELE

@@ -31,8 +31,7 @@ analysis is separated into chunks, and results are pooled together in the end
 In addition, chunks and final results are saved in the out.dir
 }
 \examples{
-#' \dontrun{
-}
+\dontrun{}
 }
 \author{
 Inga Patarcic

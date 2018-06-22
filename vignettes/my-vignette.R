@@ -39,7 +39,7 @@ opts_chunk$set(warning = FALSE,
 #  
 #  
 #        # filter CHD SNPS
-#        dd.heart <- filter(ebicat37,
+#        dd.heart <- filter(data.frame(ebicat37),
 #                           MAPPED_TRAIT=="coronary heart disease")
 #  
 #        snpsData <-   dd.heart$STRONGEST.SNP.RISK.ALLELE

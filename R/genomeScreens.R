@@ -16,6 +16,7 @@
 #'
 #' @import stringr
 #' @import dplyr
+#' @import plyr
 #' @examples
 #' \dontrun{
 #' myScreenDNA <- myDNAScreenDB(myDNA = myDNA,
@@ -28,7 +29,7 @@ myDNAScreenDB <- function(myDNA,
 
   # step 1: import database: GWASCatalog
   require(gwascat)
-
+  require(plyr)
       if (database=="ebicat37"){
 
           # STEP 1 read DB

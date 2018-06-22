@@ -248,7 +248,7 @@ myDNA &lt;- importDNA(myGenotypes = Genome,type = &quot;myHeritage&quot; )</code
 <pre class="r"><code># IDEA is as follows: create SNPs objectby extracting rs and snp risk alleles, and extract those for coronary heart disease
 
       # filter CHD SNPS
-      dd.heart &lt;- filter(ebicat37,
+      dd.heart &lt;- filter(data.frame(ebicat37),
                          MAPPED_TRAIT==&quot;coronary heart disease&quot;)
       
       snpsData &lt;-   dd.heart$STRONGEST.SNP.RISK.ALLELE

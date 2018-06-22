@@ -12,5 +12,6 @@
 #' @import stringr
 #' @import proxysnps
 #' @import dplyr
+#' @import plyr
 #' @import gwascat
 #' @importFrom parallel mclapply

@@ -30,6 +30,7 @@ myDNAScreenDB <- function(myDNA,
   # step 1: import database: GWASCatalog
   require(gwascat)
   require(plyr)
+  require(stringr)
       if (database=="ebicat37"){
 
           # STEP 1 read DB

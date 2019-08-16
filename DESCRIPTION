@@ -24,3 +24,4 @@ Suggests: knitr,
           rmarkdown,
           testthat
 VignetteBuilder: knitr
+Remotes: slowkow/proxysnps

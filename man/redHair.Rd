@@ -36,7 +36,7 @@ proxy calculations needed
 \dontrun{
 # example myHeritage
  library(myDNA)
- library(dplyr)
+ library(plyr)
  library(stringr)
   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )

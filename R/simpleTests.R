@@ -24,7 +24,7 @@
 #' \dontrun{
 #' # example myHeritage
 # library(myDNA)
-# library(dplyr)
+# library(plyr)
 # library(stringr)
 # Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 # myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -70,7 +70,7 @@ lactoseIntolerance <- function(myDNA) {
 #' @examples \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -117,7 +117,7 @@ celiacDisease23AndMe <- function(myDNA) {
 #' @examples \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -189,7 +189,7 @@ celiacDiseaseExtended <- function(myDNA){
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -244,7 +244,7 @@ cofeeConsumption <- function(myDNA){
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -297,7 +297,7 @@ deepSleeper <- function(myDNA){
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -354,7 +354,7 @@ muscleComposition <- function(myDNA){
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -407,7 +407,7 @@ bitterPTCTaster <- function(myDNA) {
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -469,7 +469,7 @@ blueEyes <- function(myDNA) {
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -539,7 +539,7 @@ blueEyesExtended <- function(myDNA) {
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
@@ -604,7 +604,7 @@ neanderthalMe <- function(myDNA) {
 #' \dontrun{
 #' # example myHeritage
 #'  library(myDNA)
-#'  library(dplyr)
+#'  library(plyr)
 #'  library(stringr)
 #'   Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 #'    myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )

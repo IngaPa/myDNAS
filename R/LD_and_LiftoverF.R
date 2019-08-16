@@ -31,7 +31,6 @@ expandByLD <- function(myDNA,
                        chunks=1,
                        out.dir){
 
-  require(parallel)
   # split data into chunks
   Split.factor <- split(1:nrow(myDNA),
                         sort(1:nrow(myDNA)%%chunks))
@@ -48,7 +47,7 @@ expandByLD <- function(myDNA,
   }
 
   if (.Platform$OS.type!="windows"){
-  tmp <- mclapply(Split.factor, getSNPs_simple,mc.cores = 5)
+  tmp <- parallel::mclapply(Split.factor, getSNPs_simple,mc.cores = 5)
   }
 
   # read-in back all LD data
@@ -117,7 +116,7 @@ getSNPs_simple <- function(chunk) {
 
 
   if (.Platform$OS.type!="windows"){
-  SNPs_LD <- mclapply(chunk,LDperSNP,
+  SNPs_LD <- parallel::mclapply(chunk,LDperSNP,
                             pop=pop,
                             R.squared=R.squared,
                             myDNA=myDNA,
@@ -155,15 +154,13 @@ getSNPs_simple <- function(chunk) {
 
 
 LDperSNP <- function(x,
-         pop,
-         R.squared,
-         myDNA){
-
-  print(x)
-  require(proxysnps)
+                     pop,
+                     R.squared,
+                     myDNA){
 
 
-  LD_snps <-  get_proxies(chrom = myDNA$chrom[x],
+
+  LD_snps <-  proxysnps::get_proxies(chrom = myDNA$chrom[x],
                           pos = myDNA$position[x],
                           pop = pop)
 

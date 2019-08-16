@@ -1,7 +1,7 @@
 ---
 title: "myDNA"
 author: "Inga Patarcic"
-date: "`r Sys.Date()`"
+date: "2019-08-16"
 output:  
   html_document:
         toc: true
@@ -14,25 +14,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r global_options, include=FALSE, eval=FALSE}
 
-library(knitr)
-library(myDNA)
-library(gwascat)
-library(dplyr)
-library(rmarkdown)
-library(stringr)
-
-opts_chunk$set(warning = FALSE,
-               message= FALSE,
-               fig.align='center',
-               fig.path='Figures', 
-               dev='png',
-               fig.show='hold', 
-               cache=FALSE)
-
-
-```
 
 
 # Introduction
@@ -57,13 +39,11 @@ Currently, user can:
 One can import personal genotypes obtained by using one of the
 direct-to-consumer (DTC) DNA tests from DNA testing companies: myHeritageDNA, 23andMe, AncestryDNA
 
-```{r, eval = FALSE}
 
+```r
 # example myHeritage
 Genome="/data/akalin/Projects/AAkalin_myDNA/Data/MyHeritage/MyHeritage_raw_dna_dataInga/MyHeritage_raw_dna_data.csv"
 myDNA <- importDNA(myGenotypes = Genome,type = "myHeritage" )
-
-
 ```
 
 
@@ -76,12 +56,10 @@ info about SNP-trait associations. Currently available only GWASCatalog
 (hg19,hg38 as ebicat37,ebicat38, and makeCurrentGWASC). However,
 in the future it will use info from SNPedia
 
-```{r, eval = FALSE}
 
+```r
 myScreenDNA <- myDNAScreenDB(myDNA = myDNA,
                              database="ebicat37" )
-
-
 ```
 
 
@@ -93,11 +71,9 @@ myScreenDNA <- myDNAScreenDB(myDNA = myDNA,
 
 Overlap my genotypes (myDNA object) and data.frame which stores info about SNPs (their unique ID -rsID, and risk allele -in that order. This function is useful when user already has a list of SNPs associated with a trait of interest.
 
-```{r, eval = FALSE}
 
-
+```r
 # IDEA is as follows: create SNPs objectby extracting rs and snp risk alleles, and extract those for coronary heart disease
-
 
       # filter CHD SNPS
       dd.heart <- filter(data.frame(ebicat37),
@@ -114,8 +90,6 @@ Overlap my genotypes (myDNA object) and data.frame which stores info about SNPs 
 # run myDNAScreenSNPS
 myDNAScreenSNPS(myDNA = myDNA,
                 snpsData = snpsData )
-
-
 ```
 
 
@@ -128,8 +102,8 @@ myDNAScreenSNPS(myDNA = myDNA,
 This function allows you to filter your imported myDNA object +
 overlapped with database of interest (GWASCatalog) by selecting trait in which you are interested in, and selecting category of SNPs. For example,high risk SNPs are those which have reported OR or beta >1.5.
 
-```{r, eval = FALSE}
 
+```r
 # screen db for all traits
 myAchille <- traitScreen(myScreenDNA, risk="high")
 
@@ -137,8 +111,6 @@ myAchille <- traitScreen(myScreenDNA, risk="high")
 myDepression <- traitScreen(myScreenDNA,
                             risk="protective",
                             trait="unipolar depression")
-
-
 ```
 
 
@@ -150,12 +122,11 @@ For analyzed genotypes (myDNA) this function identifies all SNPs
  in LD above predefined threshold. 
  
  
-```{r, eval = FALSE}
- 
+
+```r
  expandByLD(myDNA = myGenome[1:10],
           pop="EUR",
            R.squared=0.8,
            chunks=1000,
            out.dir="/data/akalin/Projects/AAkalin_myDNA/Results/")
- 
 ```

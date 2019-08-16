@@ -18,6 +18,7 @@
 #' GWASCatalog (hg19,hg38 as ebicat37,ebicat38, and makeCurrentGWASC). However,
 #' in the future it will use info from SNPedia as well.#'
 #'
+#' @import gwascat
 #' @import stringr
 #' @import dplyr
 #' @import plyr

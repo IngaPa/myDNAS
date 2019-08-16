@@ -1,21 +1,21 @@
-## ----global_options, include=FALSE---------------------------------------
-
-library(knitr)
-library(myDNA)
-library(gwascat)
-library(dplyr)
-library(rmarkdown)
-library(stringr)
-
-opts_chunk$set(warning = FALSE,
-               message= FALSE,
-               fig.align='center',
-               fig.path='Figures', 
-               dev='png',
-               fig.show='hold', 
-               cache=FALSE)
-
-
+## ----global_options, include=FALSE, eval=FALSE---------------------------
+#  
+#  library(knitr)
+#  library(myDNA)
+#  library(gwascat)
+#  library(dplyr)
+#  library(rmarkdown)
+#  library(stringr)
+#  
+#  opts_chunk$set(warning = FALSE,
+#                 message= FALSE,
+#                 fig.align='center',
+#                 fig.path='Figures',
+#                 dev='png',
+#                 fig.show='hold',
+#                 cache=FALSE)
+#  
+#  
 
 ## ---- eval = FALSE-------------------------------------------------------
 #  

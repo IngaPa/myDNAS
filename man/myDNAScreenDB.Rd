@@ -4,13 +4,17 @@
 \alias{myDNAScreenDB}
 \title{Overlaps myDNA genotypes with SNP-trait database of interest}
 \usage{
-myDNAScreenDB(myDNA, database = "ebicat37")
+myDNAScreenDB(myDNA, database = "ebicat37", trait = "all")
 }
 \arguments{
 \item{myDNA}{(data.frame) analyzed genotypes, an output of importDNA function}
 
 \item{database}{(character) info database which stores info about genotyping
-OPTIONS: "ebicat37","ebicat38", "CurrentGwascat", "taSNP"
+OPTIONS: "ebicat37","ebicat38", "CurrentGwascat"}
+
+\item{trait}{(character) "all". If all, your genotype profiles are
+overlapped with full GWAS Catalog. Diseases/Traits of interest can be
+selected, for example "Schizophrenia".
 
 NOTE! if currentGWAS option used then input myDNA needs to be liftovered
 to hg38}

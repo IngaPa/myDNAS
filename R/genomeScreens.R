@@ -18,8 +18,8 @@
 #' GWASCatalog (hg19,hg38 as ebicat37,ebicat38, and makeCurrentGWASC). However,
 #' in the future it will use info from SNPedia as well.#'
 #'
+#' @import gwascat
 #' @import stringr
-#' @import dplyr
 #' @import plyr
 #' @examples
 #' \dontrun{
@@ -34,8 +34,7 @@ myDNAScreenDB <- function(myDNA,
 
   # step 1: import database: GWASCatalog
   require(gwascat)
-  require(plyr)
-  require(stringr)
+
       if (database=="ebicat37"){
 
           # STEP 1 read DB
@@ -67,7 +66,7 @@ myDNAScreenDB <- function(myDNA,
 
           # step 2: overlap myDNA and db
           myDNA$SNPS <- myDNA$rsid
-          myDNAAdded <- join(myDNA,
+          myDNAAdded <- plyr::join(myDNA,
                              db,
                              by="SNPS",
                              type="inner")
@@ -93,7 +92,6 @@ myDNAScreenDB <- function(myDNA,
 #' In that order!
 #'
 #' @import stringr
-#' @import dplyr
 #'
 #' @details This function identifies overlap between my genotypes (myDNA object)
 #' and data.frame which stores info SNPs (their unique ID -rsID, and risk allele
@@ -132,7 +130,7 @@ myDNAScreenSNPS <- function(myDNA,
 
       # step 2: overlap myDNA and db
           myDNA$SNPS <- myDNA$rsid
-          myDNAAdded <- join(myDNA,
+          myDNAAdded <- plyr::join(myDNA,
                            snpsData,
                            by="SNPS",
                            type="inner")
@@ -164,7 +162,7 @@ identifyRiskAllele <- function(myDNAAdded,
         myRisk <- mapply(
               function(risk,
                        mine) {
-                risk %in% unlist(str_split(mine, ""))
+                risk %in% unlist(stringr::str_split(mine, ""))
                         },
                       riskAlleles,
                       myDNAAdded$genotype)

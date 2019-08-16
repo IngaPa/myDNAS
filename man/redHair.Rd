@@ -2,7 +2,7 @@
 % Please edit documentation in R/simpleTests.R
 \name{redHair}
 \alias{redHair}
-\title{Function to screen for  red hairness}
+\title{Function to screen for  red hairiness}
 \usage{
 redHair(myDNA)
 }
@@ -10,7 +10,7 @@ redHair(myDNA)
 \item{myDNA}{(character) path to the genotype file}
 }
 \description{
-Function to screen for  red hairness
+Function to screen for  red hairiness
 }
 \details{
 SOURCE 1: 23andMe report

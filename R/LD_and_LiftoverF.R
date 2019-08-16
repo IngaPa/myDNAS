@@ -37,47 +37,19 @@ expandByLD <- function(myDNA,
                         sort(1:nrow(myDNA)%%chunks))
 
   # Run LD in chunks
-  tmp <- mclapply(Split.factor, function(chunk) {
 
+  if (.Platform$OS.type=="windows"){
+    # cl <- parallel::makeCluster(detectCores())
+    # res <- parallel::parLapply(cl, X = Split.factor,
+    #                            fun = getSNPs_simple )
 
-    SNPs_LD <- mclapply(chunk,function(x,
-                                       pop,
-                                       R.squared,
-                                       myDNA){
+    res <- lapply(Split.factor, getSNPs_simple )
 
-      print(x)
-      require(proxysnps)
+  }
 
-
-      LD_snps <-  get_proxies(chrom = myDNA$chrom[x],
-                              pos = myDNA$position[x],
-                              pop = pop)
-
-      # filtering by LD
-      LD_snps <- LD_snps[which(LD_snps$R.squared>=R.squared),]
-      if (nrow(LD_snps)>0){ LD_snps$OrginalSNP <- myDNA$rsid[x]}
-
-      return(LD_snps)
-
-    },
-    pop=pop,
-    R.squared=R.squared,
-    myDNA=myDNA,
-    mc.cores=5)
-
-    # binding data together
-    SNP_LD_all <- do.call("rbind.data.frame",SNPs_LD)
-    # removing duplicated entries
-    dupl <- duplicated(SNP_LD_all$ID)
-    SNP_LD_allSNP_LD_all <- SNP_LD_all[!dupl,]
-
-
-    saveRDS(object = SNP_LD_allSNP_LD_all,
-            file = paste0(out.dir,"/myDNA_LDchucks_",chunk[1],".rds"))
-
-
-  },mc.cores = 5)
-
+  if (.Platform$OS.type!="windows"){
+  tmp <- mclapply(Split.factor, getSNPs_simple,mc.cores = 5)
+  }
 
   # read-in back all LD data
   AllLDchunks <- list.files(out.dir,
@@ -134,3 +106,71 @@ expandByLD <- function(myDNA,
 # install.packages("devtools")
 # devtools::install_github("slowkow/proxysnps",force=T)
 # library(proxysnps)
+
+
+
+
+#
+
+getSNPs_simple <- function(chunk) {
+
+
+
+  if (.Platform$OS.type!="windows"){
+  SNPs_LD <- mclapply(chunk,LDperSNP,
+                            pop=pop,
+                            R.squared=R.squared,
+                            myDNA=myDNA,
+                            mc.cores=5)
+  }
+
+
+  if (.Platform$OS.type=="windows"){
+
+    # res <- parallel::parLapply(1, X = chunk,
+    #                            fun = LDperSNP,
+    #                            pop=pop,
+    #                            R.squared=R.squared,
+    #                            myDNA=myDNA)
+    #
+    res <- lapply( chunk,  LDperSNP,
+                               pop=pop,
+                               R.squared=R.squared,
+                               myDNA=myDNA)
+  }
+
+
+  # binding data together
+  SNP_LD_all <- do.call("rbind.data.frame",SNPs_LD)
+  # removing duplicated entries
+  dupl <- duplicated(SNP_LD_all$ID)
+  SNP_LD_allSNP_LD_all <- SNP_LD_all[!dupl,]
+
+
+  saveRDS(object = SNP_LD_allSNP_LD_all,
+          file = paste0(out.dir,"/myDNA_LDchucks_",chunk[1],".rds"))
+
+
+}
+
+
+LDperSNP <- function(x,
+         pop,
+         R.squared,
+         myDNA){
+
+  print(x)
+  require(proxysnps)
+
+
+  LD_snps <-  get_proxies(chrom = myDNA$chrom[x],
+                          pos = myDNA$position[x],
+                          pop = pop)
+
+  # filtering by LD
+  LD_snps <- LD_snps[which(LD_snps$R.squared>=R.squared),]
+  if (nrow(LD_snps)>0){ LD_snps$OrginalSNP <- myDNA$rsid[x]}
+
+  return(LD_snps)
+
+}

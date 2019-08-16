@@ -3,7 +3,11 @@
 #' @param myDNA (data.frame) analyzed genotypes, an output of importDNA function
 #'
 #' @param database (character) info database which stores info about genotyping
-#' OPTIONS: "ebicat37","ebicat38", "CurrentGwascat", "taSNP"
+#' OPTIONS: "ebicat37","ebicat38", "CurrentGwascat"
+#'
+#' @param trait (character) "all". If all, your genotype profiles are
+#' overlapped with full GWAS Catalog. Diseases/Traits of interest can be
+#' selected, for example "Schizophrenia".
 #'
 #' NOTE! if currentGWAS option used then input myDNA needs to be liftovered
 #' to hg38
@@ -25,7 +29,8 @@
 #' @author Inga Patarcic
 #' @export
 myDNAScreenDB <- function(myDNA,
-                         database="ebicat37"){
+                         database="ebicat37",
+                         trait="all"){
 
   # step 1: import database: GWASCatalog
   require(gwascat)
@@ -36,13 +41,6 @@ myDNAScreenDB <- function(myDNA,
           # STEP 1 read DB
                     data(ebicat37)
                     db <- as.data.frame(ebicat37)
-
-          # step 2: overlap myDNA and db
-                    myDNA$SNPS <- myDNA$rsid
-                    myDNAAdded <- join(myDNA,
-                                     db,
-                                     by="SNPS",
-                                     type="inner")
         }
 
 
@@ -51,30 +49,28 @@ myDNAScreenDB <- function(myDNA,
         # STEP 1 read DB
                   data(ebicat37)
                   db <- as.data.frame(ebicat37)
-
-        # step 2: overlap myDNA and db
-                  myDNA$SNPS <- myDNA$rsid
-                  myDNAAdded <- join(myDNA,
-                                   db,
-                                   by="SNPS",
-                                   type="inner")
-      }
+         }
 
 
       if (database=="CurrentGwascat"){
 
         # STEP 1 read DB
                   db <- as.data.frame(makeCurrentGwascat())
-
-        # step 2: overlap myDNA and db
-                  myDNA$SNPS <- myDNA$rsid
-                  myDNAAdded <- join(myDNA,
-                                   db,
-                                   by="SNPS",
-                                   type="inner")
       }
 
-      #if (database=="taSNP"){ data(taSNP); db <- as.data.frame(taSNP)
+        # select disease of interest
+        if (trait!="all"){db <- db[which(db$DISEASE.TRAIT==trait),]}
+
+        # check if overlap with trait was identified
+
+        if (nrow(db)==0){stop("Trait not identified")}
+
+          # step 2: overlap myDNA and db
+          myDNA$SNPS <- myDNA$rsid
+          myDNAAdded <- join(myDNA,
+                             db,
+                             by="SNPS",
+                             type="inner")
 
 
   # assessing if risk allele is present or not

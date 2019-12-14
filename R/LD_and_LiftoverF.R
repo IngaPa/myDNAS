@@ -171,3 +171,67 @@ LDperSNP <- function(x,
   return(LD_snps)
 
 }
+
+
+
+#' automatically retrieves snp location for input snp ID
+#' focus only on hg19
+#' @author IngaPa
+getsnplocation <- function(snp_ID){
+  
+  # snp_ID="rs10411210"
+  
+  library(biomaRt)
+  
+  snpmart = useEnsembl(biomart = "snp",
+                       dataset="hsapiens_snp",
+                       host="grch37.ensembl.org")
+  
+  
+  snplocation <-  getBM(attributes = c('refsnp_id',
+                                       'chr_name',
+                                       'chrom_start',
+                                       'chrom_strand'), 
+                        filters = c('snp_filter'), 
+                        values = snp_ID, 
+                        mart = snpmart)
+  
+  snplocation.gr <- GRanges(paste0("chr",snplocation$chr_name),IRanges(snplocation$chrom_start,
+                                                                       snplocation$chrom_start))
+  
+  return(snplocation.gr)
+  
+}
+
+
+
+#' retrieves snp in ld for input the snp ID rs code
+#' step1. retrieves location of the SNP from ENSEMBL
+#' step2. retrieves SNPs in LD
+#' focus only on hg19
+#' @author IngaPa
+snpsInLD <- function(rsID,
+                      pop="CEU",
+                      R.squared=0.6){
+
+  #rsID <- rs10411210
+  require(proxysnps)
+  
+    SNP <-  getsnplocation(rsID)
+  
+  
+  # getting info about chromosom
+  chr <- as.character(seqnames(SNP))
+  chr <- str_replace(chr,"chr","")
+  
+  LD_snps <-  proxysnps::get_proxies(chrom = chr,
+                                     pos =start(SNP),
+                                     pop=pop)
+  
+  # filtering by LD
+  LD_snps <- LD_snps[which(LD_snps$R.squared>=R.squared),]
+
+  return(LD_snps)
+  
+  
+}

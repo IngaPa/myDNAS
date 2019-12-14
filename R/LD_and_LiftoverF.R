@@ -171,3 +171,33 @@ LDperSNP <- function(x,
   return(LD_snps)
 
 }
+
+
+
+# automatically retrieves snp location for input snp ID
+# focus only on hg19
+getsnplocation <- function(snp_ID){
+  
+  # snp_ID="rs10411210"
+  
+  library(biomaRt)
+  
+  snpmart = useEnsembl(biomart = "snp",
+                       dataset="hsapiens_snp",
+                       host="grch37.ensembl.org")
+  
+  
+  snplocation <-  getBM(attributes = c('refsnp_id',
+                                       'chr_name',
+                                       'chrom_start',
+                                       'chrom_strand'), 
+                        filters = c('snp_filter'), 
+                        values = snp_ID, 
+                        mart = snpmart)
+  
+  snplocation.gr <- GRanges(paste0("chr",snplocation$chr_name),IRanges(snplocation$chrom_start,
+                                                                       snplocation$chrom_start))
+  
+  return(snplocation.gr)
+  
+}
